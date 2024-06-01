@@ -10,10 +10,12 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    playthread.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    playthread.h
 
 FORMS += \
     mainwindow.ui
@@ -22,3 +24,19 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+mac {
+    FFMPEG_HOME = /usr/local/Cellar/ffmpeg/6.1.1_2/
+    SDL_HOME = /usr/local/Cellar/sdl2/2.28.5
+}
+
+INCLUDEPATH += $${FFMPEG_HOME}/include
+LIBS += -L$${FFMPEG_HOME}/lib \
+        -lavdevice \
+        -lavcodec \
+        -lavformat
+
+INCLUDEPATH += $${SDL_HOME}/include
+LIBS += -L$${SDL_HOME}/lib \
+         -lSDL2
+
